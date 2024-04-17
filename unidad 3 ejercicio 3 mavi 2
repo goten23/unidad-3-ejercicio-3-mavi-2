@@ -1,0 +1,56 @@
+import pygame
+import sys
+
+# Inicializar Pygame
+pygame.init()
+
+# Definir colores
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+RED = (255, 0, 0)
+
+# Definir parámetros de la ventana
+WIDTH, HEIGHT = 800, 600
+FPS = 60
+
+# Definir variables de pelota y objeto fijo
+ball_pos = [WIDTH // 2, HEIGHT // 2]
+ball_radius = 20
+stable_object_pos = [WIDTH // 2, HEIGHT // 4]
+stable_object_width = 200
+stable_object_height = 20
+
+# Inicializar la ventana
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Pelota Fijada a Objeto Estático")
+clock = pygame.time.Clock()
+
+# Función para dibujar la pelota y el objeto fijo
+def draw_ball_and_stable_object():
+    screen.fill(WHITE)
+    pygame.draw.circle(screen, RED, ball_pos, ball_radius)
+    pygame.draw.rect(screen, BLACK, (stable_object_pos[0] - stable_object_width // 2, stable_object_pos[1], stable_object_width, stable_object_height))
+
+# Bucle principal del juego
+running = True
+while running:
+    clock.tick(FPS)
+    
+    # Manejo de eventos
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+    
+    # Fijar la posición de la pelota al objeto fijo
+    ball_pos[0] = stable_object_pos[0]
+    ball_pos[1] = stable_object_pos[1] - ball_radius - 5  # Ajuste para que la pelota esté justo encima del objeto
+    
+    # Dibujar pelota y objeto fijo
+    draw_ball_and_stable_object()
+    
+    # Actualizar pantalla
+    pygame.display.flip()
+
+# Salir del juego
+pygame.quit()
+sys.exit()
